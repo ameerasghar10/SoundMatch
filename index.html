@@ -41,7 +41,7 @@
     margin: 0;
     padding: 0;
     }
-    /* The whole page has a background gradient and is centered */
+    /* The whole page has a background gradient and is centered on the page */
     body {
       font-family: var(--font);
       min-height: 100vh;
@@ -51,13 +51,35 @@
       justify-content: center;
       padding: 20px;
     }
+
+    /* Every screen is hidden by default */
+    .screen {
+      display: none; /* Hidden by default */
+      width: 100%; /* Full width */
+      max-width: 520px; /* Maximum width */
+      flex-direction: column; /* Stack vertically */
+      align-items: center; /* Center horizontally */
+      gap: 24px; /* Space between */
+      animation: fadeIn 0.3s ease; /* Smooth fade in animation */
+    }
+
+    /* Only the active screen is visible */
+    .screen.active {
+      display: flex; 
+    }
+
+    /* Fade in animation when the screen appears */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); } /* Start transparent and move down */
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 
 <body>
 
   <!-- SCREEN 1: HOME -->
-  <div id="home-screen">
+  <div class="screen active" id="home-screen">
     <h1>🐾 SoundMatch</h1>
     <p>Switch-accessible animal sound game</p>
     <button>🚀 Start Session</button>
@@ -65,7 +87,7 @@
   </div>
 
   <!-- SCREEN 2: SETTINGS -->
-  <div id="settings-screen">
+  <div class="screen" id="settings-screen">
     <h2>OT Settings</h2>
     <p>Switch Mode</p>
     <button id="mode-1">1 Switch</button>
@@ -81,7 +103,7 @@
   </div>
 
   <!-- SCREEN 3: GAME (placeholder) -->
-  <div id="game-screen">
+  <div class="screen" id="game-screen">
     <h2>Game coming in Stage 2</h2>
     <button>✕ End Session</button>
   </div>
