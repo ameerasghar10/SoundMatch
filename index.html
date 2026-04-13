@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SoundMatch</title>
 <!-- Adding CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
 <style>
     :root {
     /*Background Gradient Colours */
@@ -33,6 +34,22 @@
       --radius-card: 28px;
     /* Font with backup */
       --font:        'Nunito', sans-serif;
+    }
+    /* Removes all the default spacings */
+    *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    }
+    /* The whole page has a background gradient and is centered */
+    body {
+      font-family: var(--font);
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg-from) 0%, var(--bg-mid) 50%, var(--bg-to) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
   </style>
 </head>
