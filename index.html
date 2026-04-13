@@ -73,6 +73,32 @@
       from { opacity: 0; transform: translateY(12px); } /* Start transparent and move down */
       to   { opacity: 1; transform: translateY(0); }
     }
+    /* White rounded card container */
+    .screen .card {
+      background: var(--card);
+      border-radius: var(--radius-card);
+      box-shadow: var(--card-shadow);
+      padding: 36px 32px;
+      width: 100%;
+    }
+    /* Logo/title area */
+    .screen .logo {
+      text-align: center;
+    }
+    .screen .logo h1 {
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--text-dark);
+      letter-spacing: -1px;
+    }
+     
+    .screen .logo p {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-mid);
+      margin-top: 4px;
+    }
+
   </style>
 </head>
 
@@ -80,8 +106,10 @@
 
   <!-- SCREEN 1: HOME -->
   <div class="screen active" id="home-screen">
-    <h1>🐾 SoundMatch</h1>
-    <p>Switch-accessible animal sound game</p>
+    <div class="logo">
+        <h1>🐾 SoundMatch</h1>
+        <p>Switch-accessible animal sound game</p>
+    </div>
     <button>🚀 Start Session</button>
     <button>⚙️ Settings</button>
   </div>
