@@ -98,7 +98,69 @@
       color: var(--text-mid);
       margin-top: 4px;
     }
+/* The main button style */
+.btn {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 800;
+  border: none;
+  border-radius: var(--radius-btn);
+  cursor: pointer;
+  padding: 20px 40px;
+  /* The actual animation when pressing */
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+  /* The 3D effect needed */
+  box-shadow: 0 6px 0 rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.08);
+  width: 100%;
+  letter-spacing: 0.3px;
+}
 
+/* Pressing the button reduces the shadow */
+.btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* When the mouse is hovering, it becomes slighlty brighter */
+.btn:hover {
+  filter: brightness(1.05);
+}
+
+/* The start button */
+.btn-start {
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  color: white;
+  font-size: 26px;
+}
+
+/* The settings button */
+.btn-settings {
+  background: white;
+  color: var(--text-mid);
+  border: 2.5px solid var(--purple);
+  font-size: 18px;
+  padding: 14px 32px;
+  box-shadow: 0 4px 0 rgba(167, 139, 250, 0.3);
+}
+
+/* The save button */
+.btn-save {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: white;
+}
+
+/* The end of game button */
+.btn-end {
+  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+  color: white;
+}
+
+/* Adding space between them */
+.divider {
+  height: 1px;
+  background: #f0ebff;
+  margin: 24px 0;
+}
   </style>
 </head>
 
@@ -110,9 +172,14 @@
         <h1>🐾 SoundMatch</h1>
         <p>Switch-accessible animal sound game</p>
     </div>
-    <button>🚀 Start Session</button>
-    <button>⚙️ Settings</button>
-  </div>
+    <div style="display:flex; flex-direction:column; gap:14px; width:100%;">
+      <button class="btn btn-start">
+        🚀 Start Session
+      </button>
+      <button class="btn btn-settings">
+        ⚙️ Settings
+      </button>
+    </div>
 
   <!-- SCREEN 2: SETTINGS -->
   <div class="screen" id="settings-screen">
