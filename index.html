@@ -252,6 +252,91 @@
   box-shadow: 0 4px 0 rgba(124, 58, 237, 0.4);
 }
 
+/* Wrapper around each slider */
+.slider-wrapper {
+  position: relative;
+  padding: 0 4px;
+}
+
+/* The labels on top of the sliders */
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Each individual label spaced equally */
+.slider-labels span {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-mid);
+  flex: 1;
+  text-align: center;
+}
+
+/* First label is left and last label is right */
+.slider-labels span:first-child { text-align: left; }
+.slider-labels span:last-child  { text-align: right; }
+
+/* Changes the chrome default styles for sliders */
+input[type="range"] {
+  -webkit-appearance: none; 
+  appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Colours for each slider */
+.slider-difficulty { background: var(--green); }
+.slider-speed      { background: var(--teal); }
+.slider-volume     { background: var(--coral); }
+
+/* The draggable selector part of the slider and its colour */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: white;
+  border: 3.5px solid currentColor;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+  cursor: grab;
+  transition: transform 0.12s ease;
+}
+
+/* Like hovering makes it bigger when it's dragged */
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(1.15);
+}
+
+/* The borders colours */
+.slider-difficulty::-webkit-slider-thumb { border-color: var(--green-dark); }
+.slider-speed::-webkit-slider-thumb      { border-color: var(--teal-dark); }
+.slider-volume::-webkit-slider-thumb     { border-color: var(--coral-dark); }
+
+/* Showing the actual current value */
+.slider-value {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 4px 14px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Matches the current value of the slider with the colour of the slider */
+.slider-difficulty + .slider-value { background: #d1fae5; color: var(--green-dark); }
+.slider-speed      + .slider-value { background: #cffafe; color: var(--teal-dark); }
+.slider-volume     + .slider-value { background: #ffe4e6; color: var(--coral-dark); }
+
   </style>
 </head>
 
@@ -274,7 +359,7 @@
   </div>
 
   <!-- SCREEN 2: SETTINGS -->
-  <div class="screen" id="settings-screen">
+  <div class="screen active" id="settings-screen">
     <div class="settings-topbar">
       <button class="btn-back">🔙</button>
       <h2>OT Settings</h2>
@@ -294,21 +379,48 @@
 
       <div class="setting-row">
         <div class="setting-label">Difficulty</div>
-        <input type="range" min="0" max="2" step="1" value="0" />
+        <div class="slider-wrapper">
+          <div class="slider-labels">
+            <span>Easy</span>
+            <span>Medium</span>
+            <span>Hard</span>
+          </div>
+          <input type="range" id="slider-difficulty" class="slider-difficulty"
+                 min="0" max="2" step="1" value="0" />
+          <span class="slider-value" id="val-difficulty">Easy</span>
+        </div>
       </div>
 
       <div class="divider"></div>
 
       <div class="setting-row">
         <div class="setting-label">Scanning Speed</div>
-        <input type="range" min="0" max="2" step="1" value="1" />
+        <div class="slider-wrapper">
+          <div class="slider-labels">
+            <span>Slow</span>
+            <span>Medium</span>
+            <span>Fast</span>
+          </div>
+          <input type="range" id="slider-speed" class="slider-speed"
+                 min="0" max="2" step="1" value="1" />
+          <span class="slider-value" id="val-speed">Medium</span>
+        </div>
       </div>
 
       <div class="divider"></div>
 
       <div class="setting-row">
         <div class="setting-label">Volume</div>
-        <input type="range" min="0" max="2" step="1" value="1" />
+        <div class="slider-wrapper">
+          <div class="slider-labels">
+            <span>Quiet</span>
+            <span>Normal</span>
+            <span>Loud</span>
+          </div>
+          <input type="range" id="slider-volume" class="slider-volume"
+                 min="0" max="2" step="1" value="1" />
+          <span class="slider-value" id="val-volume">Normal</span>
+        </div>
       </div>
 
       <div class="divider"></div>
