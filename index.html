@@ -197,6 +197,61 @@
   color: var(--text-dark);
 }
 
+/* Each setting section has spacing below it */
+.setting-row {
+  margin-bottom: 28px;
+}
+
+/* The last setting row has no extra space below */
+.setting-row:last-child {
+  margin-bottom: 0;
+}
+
+/* The labels above each slider */
+.setting-label {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+/* Switch mode only needs 2 buttons next to eachother */
+.switch-mode-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 12px;
+}
+
+/* Deafult colour is white */
+.mode-btn {
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 800;
+  padding: 18px 12px;
+  border-radius: 20px;
+  border: 3px solid #e0d9f5;
+  background: white;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.06);
+}
+
+.mode-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+/* The button turns purple */
+.mode-btn.selected {
+  background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+  border-color: var(--purple-dark);
+  color: white;
+  box-shadow: 0 4px 0 rgba(124, 58, 237, 0.4);
+}
+
   </style>
 </head>
 
@@ -221,21 +276,53 @@
   <!-- SCREEN 2: SETTINGS -->
   <div class="screen" id="settings-screen">
     <div class="settings-topbar">
-    <button class="btn-back">🔙</button>
-    <h2>OT Settings</h2>
+      <button class="btn-back">🔙</button>
+      <h2>OT Settings</h2>
     </div>
-   
-    <p>Switch Mode</p>
-    <button id="mode-1">1 Switch</button>
-    <button id="mode-2">2 Switches</button>
-    <p>Difficulty</p>
-    <input type="range" min="0" max="2" step="1" value="0" />
-    <p>Scanning Speed</p>
-    <input type="range" min="0" max="2" step="1" value="1" />
-    <p>Volume</p>
-    <input type="range" min="0" max="2" step="1" value="1" />
-    <input type="checkbox" /> I've confirmed the Pretoria box is set to Space/Enter mode
-    <button>✓ Save Settings</button>
+
+    <div class="card">
+
+      <div class="setting-row">
+        <div class="setting-label">Switch Mode</div>
+        <div class="switch-mode-group">
+          <button class="mode-btn selected" id="mode-1">1 Switch</button>
+          <button class="mode-btn" id="mode-2">2 Switches</button>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-row">
+        <div class="setting-label">Difficulty</div>
+        <input type="range" min="0" max="2" step="1" value="0" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-row">
+        <div class="setting-label">Scanning Speed</div>
+        <input type="range" min="0" max="2" step="1" value="1" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-row">
+        <div class="setting-label">Volume</div>
+        <input type="range" min="0" max="2" step="1" value="1" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="setting-row">
+        <input type="checkbox" /> The Pretoria box is set to Space/Enter mode
+      </div>
+
+      <div class="divider"></div>
+
+      <button class="btn btn-save">✓ Save Settings</button>
+
+    </div>
+
   </div>
 
   <!-- SCREEN 3: GAME (placeholder) -->
