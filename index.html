@@ -161,6 +161,42 @@
   background: #f0ebff;
   margin: 24px 0;
 }
+
+/* The top of settings */
+.settings-topbar {
+  display: flex;       
+  align-items: center; 
+  gap: 12px;           
+  width: 100%;
+}
+
+/* The back arrow button */
+.btn-back {
+  background: white;
+  border: 2.5px solid var(--purple);
+  border-radius: 50%;  
+  width: 46px;
+  height: 46px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s ease;
+  box-shadow: 0 3px 0 rgba(167,139,250,0.3);
+}
+
+/* Shrinked when pushed */
+.btn-back:active {
+  transform: scale(0.92);
+}
+
+.settings-topbar h2 {
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--text-dark);
+}
+
   </style>
 </head>
 
@@ -184,7 +220,11 @@
 
   <!-- SCREEN 2: SETTINGS -->
   <div class="screen" id="settings-screen">
+    <div class="settings-topbar">
+    <button class="btn-back">🔙</button>
     <h2>OT Settings</h2>
+    </div>
+   
     <p>Switch Mode</p>
     <button id="mode-1">1 Switch</button>
     <button id="mode-2">2 Switches</button>
