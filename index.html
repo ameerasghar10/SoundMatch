@@ -372,8 +372,8 @@ input[type="range"]::-webkit-slider-thumb:active {
       <div class="setting-row">
         <div class="setting-label">Switch Mode</div>
         <div class="switch-mode-group">
-          <button class="mode-btn selected" id="mode-1">1 Switch</button>
-          <button class="mode-btn" id="mode-2">2 Switches</button>
+          <button class="mode-btn selected" id="mode-1" onclick="selectMode(1)">1 Switch</button>
+          <button class="mode-btn" id="mode-2" onclick="selectMode(2)">2 Switches</button>
         </div>
       </div>
 
@@ -456,6 +456,25 @@ input[type="range"]::-webkit-slider-thumb:active {
       document.querySelectorAll('.screen').forEach(function(screen) {
         screen.classList.remove('active');});
       document.getElementById(id).classList.add('active');
+    }
+
+    /* To store the current settings choices */
+    let settings = {
+      switchMode: 1,      /* 1 or 2 switches */
+      difficulty: 0,      /* 0=Easy, 1=Medium, 2=Hard */
+      scanningSpeed: 1,   /* 0=Slow, 1=Medium, 2=Fast */
+      volume: 1           /* 0=Quiet, 1=Normal, 2=Loud */
+    };
+
+    /* To highlight the chosen switch mode button */
+    function selectMode(mode) {
+      /* Svaes the choice to the current settings choices above */
+      settings.switchMode = mode;
+      /* Removes the purple colour from both buttons */
+      document.getElementById('mode-1').classList.remove('selected');
+      document.getElementById('mode-2').classList.remove('selected');
+      /* Only adds purple to the chosen button */
+      document.getElementById('mode-' + mode).classList.add('selected');
     }
 
   </script>
