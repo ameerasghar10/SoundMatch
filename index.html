@@ -349,19 +349,21 @@ input[type="range"]::-webkit-slider-thumb:active {
         <p>Switch-accessible animal sound game</p>
     </div>
     <div style="display:flex; flex-direction:column; gap:14px; width:100%;">
-      <button class="btn btn-start">
+      <button class="btn btn-start" onclick="showScreen('game-screen')">
         🚀 Start Session
       </button>
-      <button class="btn btn-settings">
+      <button class="btn btn-settings" onclick="showScreen('settings-screen')">
         ⚙️ Settings
       </button>
     </div>
   </div>
 
   <!-- SCREEN 2: SETTINGS -->
-  <div class="screen active" id="settings-screen">
+  <div class="screen" id="settings-screen">
     <div class="settings-topbar">
-      <button class="btn-back">🔙</button>
+      <button class="btn-back" onclick="showScreen('home-screen')">
+        🔙
+      </button>
       <h2>OT Settings</h2>
     </div>
 
@@ -431,7 +433,9 @@ input[type="range"]::-webkit-slider-thumb:active {
 
       <div class="divider"></div>
 
-      <button class="btn btn-save">✓ Save Settings</button>
+      <button class="btn btn-save" onclick="showScreen('home-screen')">
+        ✓ Save Settings
+      </button>
 
     </div>
 
@@ -439,9 +443,22 @@ input[type="range"]::-webkit-slider-thumb:active {
 
   <!-- SCREEN 3: GAME (placeholder) -->
   <div class="screen" id="game-screen">
-    <h2>Game coming in Stage 2</h2>
-    <button>✕ End Session</button>
+    <div style="text-align:center; padding: 40px;">
+      <p style="font-size:24px; font-weight:800; color:#2d2250;">🐄 SoundMatch game placeholder</p>
+    </div>
+    <button class="btn btn-end" onclick="showScreen('home-screen')">✕ End Game</button>
   </div>
+
+  <script>
+
+    /* For showing the different pages in the game */
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(function(screen) {
+        screen.classList.remove('active');});
+      document.getElementById(id).classList.add('active');
+    }
+
+  </script>
 
 </body>
 </html>
