@@ -388,7 +388,8 @@ input[type="range"]::-webkit-slider-thumb:active {
             <span>Hard</span>
           </div>
           <input type="range" id="slider-difficulty" class="slider-difficulty"
-                 min="0" max="2" step="1" value="0" />
+                 min="0" max="2" step="1" value="0"
+                 oninput="updateSlider('difficulty', this.value)" />
           <span class="slider-value" id="val-difficulty">Easy</span>
         </div>
       </div>
@@ -404,7 +405,8 @@ input[type="range"]::-webkit-slider-thumb:active {
             <span>Fast</span>
           </div>
           <input type="range" id="slider-speed" class="slider-speed"
-                 min="0" max="2" step="1" value="1" />
+                 min="0" max="2" step="1" value="1"
+                 oninput="updateSlider('speed', this.value)" />
           <span class="slider-value" id="val-speed">Medium</span>
         </div>
       </div>
@@ -420,7 +422,8 @@ input[type="range"]::-webkit-slider-thumb:active {
             <span>Loud</span>
           </div>
           <input type="range" id="slider-volume" class="slider-volume"
-                 min="0" max="2" step="1" value="1" />
+                 min="0" max="2" step="1" value="1"
+                 oninput="updateSlider('volume', this.value)" />
           <span class="slider-value" id="val-volume">Normal</span>
         </div>
       </div>
@@ -475,6 +478,28 @@ input[type="range"]::-webkit-slider-thumb:active {
       document.getElementById('mode-2').classList.remove('selected');
       /* Only adds purple to the chosen button */
       document.getElementById('mode-' + mode).classList.add('selected');
+    }
+
+    /* Keeps the names for each slider position */
+    const DIFFICULTY_LABELS = ['Easy', 'Medium', 'Hard'];
+    const SPEED_LABELS       = ['Slow', 'Medium', 'Fast'];
+    const VOLUME_LABELS      = ['Quiet', 'Normal', 'Loud'];
+
+    /* Slider updates when dragged by WMDLC OT */
+    function updateSlider(type, value) {
+      /* Change from text to an actual number to use */
+      value = parseInt(value);
+
+      if (type === 'difficulty') {
+        settings.difficulty = value;
+        document.getElementById('val-difficulty').textContent = DIFFICULTY_LABELS[value];
+      } else if (type === 'speed') {
+        settings.scanningSpeed = value;
+        document.getElementById('val-speed').textContent = SPEED_LABELS[value];
+      } else if (type === 'volume') {
+        settings.volume = value;
+        document.getElementById('val-volume').textContent = VOLUME_LABELS[value];
+      }
     }
 
   </script>
