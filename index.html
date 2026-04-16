@@ -510,6 +510,25 @@ input[type="range"]::-webkit-slider-thumb:active {
       showScreen('home-screen');
     }
 
+    /* Running automatically when the website loads */
+    window.onload = function() {
+      /* Checks previously saved setings */
+      const saved = localStorage.getItem('soundmatch-settings');
+      /* If saved is not null, there are saved settings */
+      if (saved) {
+        /* Converts the text back */
+        settings = JSON.parse(saved);
+        /* Updates everything to the saved settings */
+        selectMode(settings.switchMode);
+        document.getElementById('slider-difficulty').value = settings.difficulty;
+        document.getElementById('slider-speed').value = settings.scanningSpeed;
+        document.getElementById('slider-volume').value = settings.volume;
+        updateSlider('difficulty', settings.difficulty);
+        updateSlider('speed', settings.scanningSpeed);
+        updateSlider('volume', settings.volume);
+      }
+    };
+
   </script>
 
 </body>
