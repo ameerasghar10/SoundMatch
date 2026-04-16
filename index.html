@@ -436,7 +436,7 @@ input[type="range"]::-webkit-slider-thumb:active {
 
       <div class="divider"></div>
 
-      <button class="btn btn-save" onclick="showScreen('home-screen')">
+      <button class="btn btn-save" onclick="saveSettings()">
         ✓ Save Settings
       </button>
 
@@ -500,6 +500,14 @@ input[type="range"]::-webkit-slider-thumb:active {
         settings.volume = value;
         document.getElementById('val-volume').textContent = VOLUME_LABELS[value];
       }
+    }
+
+    /* Save current setings to local storage */
+    function saveSettings() {
+      /* Only text can be saved so needs to be converted */
+      localStorage.setItem('soundmatch-settings', JSON.stringify(settings));
+      /* Returns to home screen after saving settings */
+      showScreen('home-screen');
     }
 
   </script>
