@@ -349,7 +349,7 @@ input[type="range"]::-webkit-slider-thumb:active {
         <p>Switch-accessible animal sound game</p>
     </div>
     <div style="display:flex; flex-direction:column; gap:14px; width:100%;">
-      <button class="btn btn-start" onclick="showScreen('game-screen')">
+      <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; startRound();">
         🚀 Start Session
       </button>
       <button class="btn btn-settings" onclick="showScreen('settings-screen')">
@@ -576,6 +576,71 @@ input[type="range"]::-webkit-slider-thumb:active {
     let soundPlaying = null;        /* the currently playing sound */
     let answerLocked = false;       /* stops child pressing buttons during feedback */
 
+    /* Picks a random animal from the list */
+    function randomAnimal() {
+      return ANIMALS[Math.floor(Math.random() * ANIMALS.length)];
+    }
+
+    /* Starts a new round — picks animals, shows image, plays sound */
+    function startRound() {
+      /* Reset the feedback message and unlock buttons */
+      document.getElementById('feedback-msg').textContent = '';
+      answerLocked = false;
+
+      /* Update the round counter at the top */
+      document.getElementById('round-counter').textContent = 'Round ' + roundNumber;
+
+      /* Pick a random animal for the image */
+      currentImageAnimal = randomAnimal();
+
+      /* 50% chance the sound matches the image */
+      if (Math.random() < 0.5) {
+        /* Matching round — sound is same animal as image */
+        currentSoundAnimal = currentImageAnimal;
+      } else {
+        /* Mismatching round — pick a different animal for sound */
+        do {
+          currentSoundAnimal = randomAnimal();
+        } while (currentSoundAnimal.name === currentImageAnimal.name);
+      }
+
+      /* Show the image — apply blur based on difficulty setting */
+      const img = document.getElementById('animal-image');
+      const blurAmount = [0, 12, 24][settings.difficulty];
+      img.style.transition = 'none';
+      img.style.filter = 'blur(' + blurAmount + 'px)';
+      img.src = currentImageAnimal.image;
+
+      /* After a tiny delay, start the gradual unblur */
+      setTimeout(function() {
+        img.style.transition = 'filter 6000ms linear';
+        img.style.filter = 'blur(0px)';
+      }, 100);
+
+      /* Stop any previously playing sound */
+      if (soundPlaying) {
+        soundPlaying.pause();
+        soundPlaying.currentTime = 0;
+      }
+
+      /* Play the new sound with gradual fade in to avoid startle reflex */
+      soundPlaying = new Audio(currentSoundAnimal.sound);
+      soundPlaying.volume = 0;
+      soundPlaying.play();
+
+      /* Gradually increase volume over 800ms */
+      let vol = 0;
+      const targetVolume = [0.4, 0.7, 1.0][settings.volume];
+      const fadeInterval = setInterval(function() {
+        vol += 0.05;
+        if (vol >= targetVolume) {
+          vol = targetVolume;
+          clearInterval(fadeInterval);
+        }
+        soundPlaying.volume = vol;
+      }, 40);
+    }
+    
   </script>
 
 </body>
