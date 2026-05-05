@@ -640,6 +640,54 @@ input[type="range"]::-webkit-slider-thumb:active {
         soundPlaying.volume = vol;
       }, 40);
     }
+
+    /* Checks if the child's answer is correct and shows feedback */
+    function handleAnswer(childSaidYes) {
+      /* Ignore button presses during feedback */
+      if (answerLocked) return;
+      answerLocked = true;
+
+      /* The correct answer is YES if image and sound match */
+      const correctAnswer = (currentImageAnimal.name === currentSoundAnimal.name);
+      const isCorrect = (childSaidYes === correctAnswer);
+
+      /* Get the feedback message box */
+      const msg = document.getElementById('feedback-msg');
+
+      if (isCorrect) {
+        /* Correct — show celebration message in green */
+        msg.textContent = '🎉 Well done!';
+        msg.style.color = '#059669';
+      } else {
+        /* Incorrect — show gentle message in red */
+        msg.textContent = '❌ Try again next time!';
+        msg.style.color = '#e11d48';
+      }
+
+      /* Stop the sound */
+      if (soundPlaying) {
+        soundPlaying.pause();
+        soundPlaying.currentTime = 0;
+      }
+
+      /* Wait 2 seconds then start the next round */
+      setTimeout(function() {
+        roundNumber++;
+        startRound();
+      }, 2000);
+    }
+
+    /* Ends the session and goes back to home screen */
+    function endSession() {
+      /* Stop any playing sound */
+      if (soundPlaying) {
+        soundPlaying.pause();
+        soundPlaying.currentTime = 0;
+      }
+      /* Reset round number for next session */
+      roundNumber = 1;
+      showScreen('home-screen');
+    }
     
   </script>
 
