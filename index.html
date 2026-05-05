@@ -445,7 +445,7 @@ input[type="range"]::-webkit-slider-thumb:active {
   </div>
 
   <!-- SCREEN 3: GAME -->
-  <div class="screen active" id="game-screen">
+  <div class="screen" id="game-screen">
 
     <!-- Top bar showing which round it is and a button to end the session -->
     <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
@@ -554,6 +554,27 @@ input[type="range"]::-webkit-slider-thumb:active {
         updateSlider('volume', settings.volume);
       }
     };
+
+    /* All 10 animals with their image and sound file paths */
+    const ANIMALS = [
+      { name: 'cow',      image: 'images/cow.jpg',      sound: 'sounds/cow.wav' },
+      { name: 'horse',    image: 'images/horse.jpg',    sound: 'sounds/horse.wav' },
+      { name: 'sheep',    image: 'images/sheep.jpg',    sound: 'sounds/sheep.mp3' },
+      { name: 'dog',      image: 'images/dog.jpg',      sound: 'sounds/dog.wav' },
+      { name: 'cat',      image: 'images/cat.jpg',      sound: 'sounds/cat.wav' },
+      { name: 'duck',     image: 'images/duck.jpg',     sound: 'sounds/duck.wav' },
+      { name: 'pig',      image: 'images/pig.jpg',      sound: 'sounds/pig.wav' },
+      { name: 'lion',     image: 'images/lion.jpg',     sound: 'sounds/lion.wav' },
+      { name: 'elephant', image: 'images/elephant.jpg', sound: 'sounds/elephant.wav' },
+      { name: 'rooster',  image: 'images/rooster.jpg',  sound: 'sounds/rooster.wav' }
+    ];
+
+    /* Tracks what's happening in the current round */
+    let currentImageAnimal = null;  /* which animal is shown in the image */
+    let currentSoundAnimal = null;  /* which animal is playing as sound */
+    let roundNumber = 1;            /* which round we're on */
+    let soundPlaying = null;        /* the currently playing sound */
+    let answerLocked = false;       /* stops child pressing buttons during feedback */
 
   </script>
 
