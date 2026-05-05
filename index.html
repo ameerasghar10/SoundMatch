@@ -444,12 +444,38 @@ input[type="range"]::-webkit-slider-thumb:active {
 
   </div>
 
-  <!-- SCREEN 3: GAME (placeholder) -->
-  <div class="screen" id="game-screen">
-    <div style="text-align:center; padding: 40px;">
-      <p style="font-size:24px; font-weight:800; color:#2d2250;">🐄 SoundMatch game placeholder</p>
+  <!-- SCREEN 3: GAME -->
+  <div class="screen active" id="game-screen">
+
+    <!-- Top bar showing which round it is and a button to end the session -->
+    <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+      <span id="round-counter" style="font-size:18px; font-weight:800; color:#6b5fa6;">Round 1</span>
+      <button class="btn-back" onclick="endSession()" style="font-size:14px; width:46px; height:46px;">✕</button>
     </div>
-    <button class="btn btn-end" onclick="showScreen('home-screen')">✕ End Game</button>
+
+    <!-- The animal image — JavaScript swaps this each round -->
+    <!-- The blur gradually fades away using a CSS transition -->
+    <div style="width:100%; border-radius:24px; overflow:hidden; box-shadow: 0 8px 40px rgba(120,100,180,0.2);">
+      <img id="animal-image" src="" alt="Animal" 
+           style="width:100%; height:280px; object-fit:cover; display:block; transition: filter 6000ms linear;" />
+    </div>
+
+    <!-- The two answer buttons the child presses -->
+    <!-- YES = green, NO = red so the child knows which is which -->
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; width:100%;">
+      <button class="btn" id="yes-btn" onclick="handleAnswer(true)"
+        style="background:linear-gradient(135deg,#34d399,#059669); color:white; font-size:28px; padding:28px;">
+        ✓ YES
+      </button>
+      <button class="btn" id="no-btn" onclick="handleAnswer(false)"
+        style="background:linear-gradient(135deg,#fb7185,#e11d48); color:white; font-size:28px; padding:28px;">
+        ✗ NO
+      </button>
+    </div>
+
+    <!-- Message that appears after the child answers — correct or incorrect -->
+    <div id="feedback-msg" style="font-size:24px; font-weight:900; text-align:center; min-height:40px; color:#2d2250;"></div>
+
   </div>
 
   <script>
