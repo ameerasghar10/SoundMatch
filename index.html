@@ -689,6 +689,21 @@ input[type="range"]::-webkit-slider-thumb:active {
       showScreen('home-screen');
     }
     
+    /* Listens for keyboard input from the Pretoria switch interface */
+    document.addEventListener('keydown', function(event) {
+      /* Only listen for keys when the game screen is active */
+      if (!document.getElementById('game-screen').classList.contains('active')) return;
+
+      if (event.code === 'Space') {
+        /* Left switch / spacebar = YES */
+        event.preventDefault(); /* stops page from scrolling on spacebar */
+        handleAnswer(true);
+      } else if (event.code === 'Enter') {
+        /* Right switch / enter = NO */
+        handleAnswer(false);
+      }
+    });
+
   </script>
 
 </body>
