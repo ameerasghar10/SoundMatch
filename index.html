@@ -448,8 +448,10 @@ input[type="range"]::-webkit-slider-thumb:active {
   <div class="screen" id="game-screen">
 
     <!-- Top bar showing which round it is and a button to end the session -->
+    <!-- Top bar showing round, streak and end button -->
     <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
       <span id="round-counter" style="font-size:18px; font-weight:800; color:#6b5fa6;">Round 1</span>
+      <span id="streak-counter" style="font-size:18px; font-weight:800; color:#f59e0b;"></span>
       <button class="btn-back" onclick="endSession()" style="font-size:14px; width:46px; height:46px;">✕</button>
     </div>
 
@@ -574,7 +576,8 @@ input[type="range"]::-webkit-slider-thumb:active {
     let currentSoundAnimal = null;  /* which animal is playing as sound */
     let roundNumber = 1;            /* which round we're on */
     let soundPlaying = null;        /* the currently playing sound */
-    let answerLocked = false;       /* stops child pressing buttons during feedback */
+    let answerLocked = false;
+    let streakCount = 0; /*tracks how many correct answers in a row*/
 
     /* Picks a random animal from the list */
     function randomAnimal() {
@@ -655,13 +658,25 @@ input[type="range"]::-webkit-slider-thumb:active {
       const msg = document.getElementById('feedback-msg');
 
       if (isCorrect) {
-        /* Correct — show celebration message in green */
+        /* Increase streak and show celebration message */
+        streakCount++;
         msg.textContent = '🎉 Well done!';
         msg.style.color = '#059669';
       } else {
-        /* Incorrect — show gentle message in red */
+        /* Reset streak on wrong answer */
+        streakCount = 0;
         msg.textContent = '❌ Try again next time!';
         msg.style.color = '#e11d48';
+      }
+
+      /* Update the streak display */
+      const streakEl = document.getElementById('streak-counter');
+      if (streakCount >= 3) {
+        streakEl.textContent = '🔥 ' + streakCount + ' in a row!';
+      } else if (streakCount > 0) {
+        streakEl.textContent = '⭐ ' + streakCount;
+      } else {
+        streakEl.textContent = '';
       }
 
       /* Stop the sound */
@@ -686,6 +701,7 @@ input[type="range"]::-webkit-slider-thumb:active {
       }
       /* Reset round number for next session */
       roundNumber = 1;
+      streakCount = 0;
       showScreen('home-screen');
     }
     
