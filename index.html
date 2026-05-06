@@ -478,6 +478,9 @@ input[type="range"]::-webkit-slider-thumb:active {
     <!-- Message that appears after the child answers — correct or incorrect -->
     <div id="feedback-msg" style="font-size:24px; font-weight:900; text-align:center; min-height:40px; color:#2d2250;"></div>
 
+    <!-- Canvas for fireworks animation on correct answer -->
+    <canvas id="fireworks-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; display:none;"></canvas>
+
   </div>
 
   <script>
