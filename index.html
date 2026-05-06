@@ -6,6 +6,8 @@
   <title>SoundMatch</title>
 <!-- Adding CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Canvas confetti library for correct answer celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
     :root {
     /*Background Gradient Colours */
@@ -478,9 +480,6 @@ input[type="range"]::-webkit-slider-thumb:active {
     <!-- Message that appears after the child answers — correct or incorrect -->
     <div id="feedback-msg" style="font-size:24px; font-weight:900; text-align:center; min-height:40px; color:#2d2250;"></div>
 
-    <!-- Canvas for fireworks animation on correct answer -->
-    <canvas id="fireworks-canvas" style="position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:999; display:none;"></canvas>
-
   </div>
 
   <script>
@@ -665,6 +664,7 @@ input[type="range"]::-webkit-slider-thumb:active {
         streakCount++;
         msg.textContent = '🎉 Well done!';
         msg.style.color = '#059669';
+        launchCelebration();
       } else {
         /* Reset streak on wrong answer */
         streakCount = 0;
@@ -706,6 +706,29 @@ input[type="range"]::-webkit-slider-thumb:active {
       roundNumber = 1;
       streakCount = 0;
       showScreen('home-screen');
+    }
+
+    /* Launches confetti and plays reward sound on correct answer */
+    function launchCelebration() {
+      const rewardSound = new Audio('sounds/success.wav');
+      rewardSound.volume = [0.4, 0.7, 1.0][settings.volume];
+      rewardSound.play();
+
+      confetti({
+        particleCount: 80,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0, y: 0.3 },
+        colors: ['#fbbf24', '#a78bfa', '#34d399', '#fb7185', '#22d3ee']
+      });
+
+      confetti({
+        particleCount: 80,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1, y: 0.3 },
+        colors: ['#fbbf24', '#a78bfa', '#34d399', '#fb7185', '#22d3ee']
+      });
     }
     
     /* Listens for keyboard input from the Pretoria switch interface */
