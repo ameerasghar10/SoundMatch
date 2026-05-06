@@ -598,6 +598,8 @@ input[type="range"]::-webkit-slider-thumb:active {
     let soundPlaying = null;        /* the currently playing sound */
     let answerLocked = false;
     let streakCount = 0; /*tracks how many correct answers in a row*/
+    let scanningInterval = null; /* the timer that cycles the highlight between YES and NO */
+    let scanningIndex = 0;       /* 0 = YES highlighted, 1 = NO highlighted */
 
     /* Picks a random animal from the list */
     function randomAnimal() {
