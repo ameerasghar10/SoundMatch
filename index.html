@@ -254,6 +254,13 @@
   box-shadow: 0 4px 0 rgba(124, 58, 237, 0.4);
 }
 
+/* Yellow glowing border shows which button is currently being scanned */
+.scanning-highlight {
+  box-shadow: 0 0 0 5px #fbbf24, 0 0 20px #fbbf24 !important;
+  transform: scale(1.05) !important;
+  transition: box-shadow 0.15s ease, transform 0.15s ease !important;
+}
+
 /* Wrapper around each slider */
 .slider-wrapper {
   position: relative;
