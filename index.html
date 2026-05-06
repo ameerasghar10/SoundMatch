@@ -339,6 +339,17 @@ input[type="range"]::-webkit-slider-thumb:active {
 .slider-speed      + .slider-value { background: #cffafe; color: var(--teal-dark); }
 .slider-volume     + .slider-value { background: #ffe4e6; color: var(--coral-dark); }
 
+/* Red flash animation for incorrect answers */
+@keyframes redFlash {
+  0%   { background: linear-gradient(135deg, #e8f4f8 0%, #ede8f8 50%, #e8f8f0 100%); }
+  30%  { background: #ffe4e6; }
+  100% { background: linear-gradient(135deg, #e8f4f8 0%, #ede8f8 50%, #e8f8f0 100%); }
+}
+
+.incorrect-flash {
+  animation: redFlash 0.8s ease;
+}
+
   </style>
 </head>
 
@@ -616,9 +627,10 @@ input[type="range"]::-webkit-slider-thumb:active {
       img.style.filter = 'blur(' + blurAmount + 'px)';
       img.src = currentImageAnimal.image;
 
-      /* After a tiny delay, start the gradual unblur */
+      /* After a tiny delay, start the gradual unblur — speed depends on difficulty */
+      const unblurTime = [3000, 5000, 8000][settings.difficulty];
       setTimeout(function() {
-        img.style.transition = 'filter 6000ms linear';
+        img.style.transition = 'filter ' + unblurTime + 'ms linear';
         img.style.filter = 'blur(0px)';
       }, 100);
 
@@ -659,17 +671,22 @@ input[type="range"]::-webkit-slider-thumb:active {
       /* Get the feedback message box */
       const msg = document.getElementById('feedback-msg');
 
+      /* Get the animal name with first letter capitalised */
+      const animalName = currentImageAnimal.name.charAt(0).toUpperCase() + currentImageAnimal.name.slice(1);
+
       if (isCorrect) {
-        /* Increase streak and show celebration message */
+        /* Increase streak and show celebration message with animal name */
         streakCount++;
-        msg.textContent = '🎉 Well done!';
+        msg.textContent = '🎉 Well done! That was a ' + animalName + '!';
         msg.style.color = '#059669';
         launchCelebration();
       } else {
-        /* Reset streak on wrong answer */
+        /* Reset streak and show gentle message with animal name */
         streakCount = 0;
-        msg.textContent = '❌ Try again next time!';
+        msg.textContent = '❌ It was a ' + animalName + '! Try again!';
         msg.style.color = '#e11d48';
+        document.body.classList.add('incorrect-flash');
+        setTimeout(function() { document.body.classList.remove('incorrect-flash'); }, 800);
       }
 
       /* Update the streak display */
