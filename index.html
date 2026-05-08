@@ -734,6 +734,49 @@ input[type="range"]::-webkit-slider-thumb:active {
       showScreen('home-screen');
     }
 
+    /* Starts the scanning highlight cycling between YES and NO */
+    function startScanning() {
+      /* Only scan in 1 switch mode — not needed in 2 switch mode */
+      if (settings.switchMode !== 1) return;
+
+      /* Scanning speed — Slow=3000ms, Medium=2000ms, Fast=1000ms */
+      const speed = [3000, 2000, 1000][settings.scanningSpeed];
+      scanningIndex = 0;
+
+      /* Highlight YES first */
+      updateScanHighlight();
+
+      /* Cycle the highlight between YES and NO at the set speed */
+      scanningInterval = setInterval(function() {
+        scanningIndex = scanningIndex === 0 ? 1 : 0;
+        updateScanHighlight();
+      }, speed);
+    }
+
+    /* Moves the yellow glow to whichever button is currently being scanned */
+    function updateScanHighlight() {
+      const yesBtn = document.getElementById('yes-btn');
+      const noBtn  = document.getElementById('no-btn');
+
+      if (scanningIndex === 0) {
+        /* YES is highlighted */
+        yesBtn.classList.add('scanning-highlight');
+        noBtn.classList.remove('scanning-highlight');
+      } else {
+        /* NO is highlighted */
+        noBtn.classList.add('scanning-highlight');
+        yesBtn.classList.remove('scanning-highlight');
+      }
+    }
+
+    /* Stops scanning and removes the glow from both buttons */
+    function stopScanning() {
+      clearInterval(scanningInterval);
+      scanningInterval = null;
+      document.getElementById('yes-btn').classList.remove('scanning-highlight');
+      document.getElementById('no-btn').classList.remove('scanning-highlight');
+    }
+
     /* Launches confetti and plays reward sound on correct answer */
     function launchCelebration() {
       const rewardSound = new Audio('sounds/success.wav');
