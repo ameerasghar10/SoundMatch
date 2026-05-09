@@ -369,7 +369,7 @@ input[type="range"]::-webkit-slider-thumb:active {
         <p>Switch-accessible animal sound game</p>
     </div>
     <div style="display:flex; flex-direction:column; gap:14px; width:100%;">
-      <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; startRound();">
+      <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; recentResults=[]; currentBlurStep=settings.difficulty; startRound();">
         🚀 Start Session
       </button>
       <button class="btn btn-settings" onclick="showScreen('settings-screen')">
@@ -634,15 +634,15 @@ input[type="range"]::-webkit-slider-thumb:active {
         } while (currentSoundAnimal.name === currentImageAnimal.name);
       }
 
-      /* Show the image — apply blur based on difficulty setting */
+      /* Show the image — apply blur based on adaptive difficulty level instead of just level */
       const img = document.getElementById('animal-image');
-      const blurAmount = [0, 12, 24][settings.difficulty];
+      const blurAmount = [0, 12, 24][currentBlurStep];
       img.style.transition = 'none';
       img.style.filter = 'blur(' + blurAmount + 'px)';
       img.src = currentImageAnimal.image;
 
       /* After a tiny delay, start the gradual unblur — speed depends on difficulty */
-      const unblurTime = [3000, 5000, 8000][settings.difficulty];
+      const unblurTime = [3000, 5000, 8000][currentBlurStep];
       setTimeout(function() {
         img.style.transition = 'filter ' + unblurTime + 'ms linear';
         img.style.filter = 'blur(0px)';
@@ -690,6 +690,9 @@ input[type="range"]::-webkit-slider-thumb:active {
       /* Get the animal name with first letter capitalised */
       const animalName = currentImageAnimal.name.charAt(0).toUpperCase() + currentImageAnimal.name.slice(1);
 
+      /* Update adaptive difficulty with this round's result */
+      updateAdaptiveDifficulty(isCorrect);
+      
       if (isCorrect) {
         /* Increase streak and show celebration message with animal name */
         streakCount++;
@@ -740,6 +743,8 @@ input[type="range"]::-webkit-slider-thumb:active {
       /* Reset round number for next session */
       roundNumber = 1;
       streakCount = 0;
+      recentResults = [];  /* clear performance history */
+      currentBlurStep = settings.difficulty; /* reset blur to OT's chosen level */
       showScreen('home-screen');
     }
 
