@@ -808,8 +808,8 @@ input[type="range"]::-webkit-slider-thumb:active {
       /* Count how many of the last 5 were correct */
       const correctCount = recentResults.filter(function(r) { return r; }).length;
 
-      /* Get the OT's chosen difficulty as the boundary */
-      const maxBlur = settings.difficulty;
+      /* Maximum blur is always 2 — OT setting is the starting point not the ceiling */
+      const maxBlur = 2;
 
       if (correctCount >= 4 && currentBlurStep < maxBlur) {
         /* Child doing well — increase blur by one step */
