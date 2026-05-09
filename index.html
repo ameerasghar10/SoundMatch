@@ -786,6 +786,35 @@ input[type="range"]::-webkit-slider-thumb:active {
       document.getElementById('no-btn').classList.remove('scanning-highlight');
     }
 
+    /* Adaptive difficulty — adjusts blur based on last 5 rounds */
+    /* Justified by Tresser et al. (2021) and Sandlund et al. (2011) */
+    function updateAdaptiveDifficulty(wasCorrect) {
+      /* Add this round's result to the list */
+      recentResults.push(wasCorrect);
+
+      /* Only keep the last 5 results */
+      if (recentResults.length > 5) {
+        recentResults.shift(); /* removes the oldest result */
+      }
+
+      /* Only adapt after we have 5 results */
+      if (recentResults.length < 5) return;
+
+      /* Count how many of the last 5 were correct */
+      const correctCount = recentResults.filter(function(r) { return r; }).length;
+
+      /* Get the OT's chosen difficulty as the boundary */
+      const maxBlur = settings.difficulty;
+
+      if (correctCount >= 4 && currentBlurStep < maxBlur) {
+        /* Child doing well — increase blur by one step */
+        currentBlurStep++;
+      } else if (correctCount <= 2 && currentBlurStep > 0) {
+        /* Child struggling — decrease blur by one step */
+        currentBlurStep--;
+      }
+    }
+
     /* Launches confetti and plays reward sound on correct answer */
     function launchCelebration() {
       const rewardSound = new Audio('sounds/success.wav');
