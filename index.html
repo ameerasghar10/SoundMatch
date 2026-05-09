@@ -600,6 +600,8 @@ input[type="range"]::-webkit-slider-thumb:active {
     let streakCount = 0; /*tracks how many correct answers in a row*/
     let scanningInterval = null; /* the timer that cycles the highlight between YES and NO */
     let scanningIndex = 0;       /* 0 = YES highlighted, 1 = NO highlighted */
+    let recentResults = [];  /* stores last 5 round results — true = correct, false = incorrect */
+    let currentBlurStep = 0; /* current blur level — adjusted by adaptive algorithm */
 
     /* Picks a random animal from the list */
     function randomAnimal() {
