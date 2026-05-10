@@ -506,6 +506,62 @@ input[type="range"]::-webkit-slider-thumb:active {
 
   </div>
 
+  <!-- SCREEN 4: SESSION SUMMARY -->
+  <div class="screen" id="summary-screen">
+
+    <!-- Title -->
+    <div class="logo">
+      <h1>📊 Session Summary</h1>
+      <p>Here's how the session went</p>
+    </div>
+
+    <!-- Summary card -->
+    <div class="card">
+
+      <!-- Rounds played -->
+      <div style="text-align:center; margin-bottom:24px;">
+        <p style="font-size:16px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:1px;">Rounds Played</p>
+        <p id="summary-rounds" style="font-size:48px; font-weight:900; color:var(--text-dark);">0</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Correct and incorrect side by side -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0;">
+        <div style="text-align:center; background:#d1fae5; border-radius:20px; padding:20px;">
+          <p style="font-size:14px; font-weight:800; color:var(--green-dark); text-transform:uppercase; letter-spacing:1px;">Correct</p>
+          <p id="summary-correct" style="font-size:42px; font-weight:900; color:var(--green-dark);">0</p>
+        </div>
+        <div style="text-align:center; background:#ffe4e6; border-radius:20px; padding:20px;">
+          <p style="font-size:14px; font-weight:800; color:var(--coral-dark); text-transform:uppercase; letter-spacing:1px;">Incorrect</p>
+          <p id="summary-incorrect" style="font-size:42px; font-weight:900; color:var(--coral-dark);">0</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Accuracy -->
+      <div style="text-align:center; margin-bottom:24px;">
+        <p style="font-size:16px; font-weight:800; color:var(--text-light); text-transform:uppercase; letter-spacing:1px;">Accuracy</p>
+        <p id="summary-accuracy" style="font-size:48px; font-weight:900; color:var(--purple-dark);">0%</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Buttons -->
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; recentResults=[]; currentBlurStep=settings.difficulty; sessionCorrect=0; sessionIncorrect=0; startRound();">
+          🔄 New Session
+        </button>
+        <button class="btn btn-settings" onclick="showScreen('home-screen')">
+          🏠 Back to Home
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
   <script>
 
     /* For showing the different pages in the game */
@@ -746,21 +802,34 @@ input[type="range"]::-webkit-slider-thumb:active {
       }, 2000);
     }
 
-    /* Ends the session and goes back to home screen */
+    /* Ends the session and shows the summary screen */
     function endSession() {
       /* Stop any playing sound */
       if (soundPlaying) {
         soundPlaying.pause();
         soundPlaying.currentTime = 0;
       }
-      /* Stop scanning when returning to home screen */
+      /* Stop scanning */
       stopScanning();
-      /* Reset round number for next session */
+
+      /* Calculate accuracy */
+      const totalRounds = sessionCorrect + sessionIncorrect;
+      const accuracy = totalRounds > 0 ? Math.round((sessionCorrect / totalRounds) * 100) : 0;
+
+      /* Update summary screen with session results */
+      document.getElementById('summary-rounds').textContent = totalRounds;
+      document.getElementById('summary-correct').textContent = sessionCorrect;
+      document.getElementById('summary-incorrect').textContent = sessionIncorrect;
+      document.getElementById('summary-accuracy').textContent = accuracy + '%';
+
+      /* Reset for next session */
       roundNumber = 1;
       streakCount = 0;
-      recentResults = [];  /* clear performance history */
-      currentBlurStep = settings.difficulty; /* reset blur to OT's chosen level */
-      showScreen('home-screen');
+      recentResults = [];
+      currentBlurStep = settings.difficulty;
+
+      /* Show summary screen instead of going straight home */
+      showScreen('summary-screen');
     }
 
     /* Starts the scanning highlight cycling between YES and NO */
