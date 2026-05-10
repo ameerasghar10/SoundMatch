@@ -375,7 +375,7 @@ input[type="range"]::-webkit-slider-thumb:active {
         <p>Switch-accessible animal sound game</p>
     </div>
     <div style="display:flex; flex-direction:column; gap:14px; width:100%;">
-      <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; recentResults=[]; currentBlurStep=settings.difficulty; startRound();">
+      <button class="btn btn-start" onclick="showScreen('game-screen'); roundNumber=1; recentResults=[]; currentBlurStep=settings.difficulty; sessionCorrect=0; sessionIncorrect=0; startRound();">
         🚀 Start Session
       </button>
       <button class="btn btn-settings" onclick="showScreen('settings-screen')">
@@ -608,6 +608,8 @@ input[type="range"]::-webkit-slider-thumb:active {
     let scanningIndex = 0;       /* 0 = YES highlighted, 1 = NO highlighted */
     let recentResults = [];  /* stores last 5 round results — true = correct, false = incorrect */
     let currentBlurStep = 0; /* current blur level — adjusted by adaptive algorithm */
+    let sessionCorrect = 0;   /* total correct answers this session */
+    let sessionIncorrect = 0; /* total incorrect answers this session */
 
     /* Picks a random animal from the list */
     function randomAnimal() {
@@ -698,6 +700,13 @@ input[type="range"]::-webkit-slider-thumb:active {
 
       /* Update adaptive difficulty with this round's result */
       updateAdaptiveDifficulty(isCorrect);
+
+      /* Count correct and incorrect for session summary */
+      if (isCorrect) {
+        sessionCorrect++;
+      } else {
+        sessionIncorrect++;
+      }
       
       if (isCorrect) {
         /* Increase streak and show celebration message with animal name */
